@@ -90,4 +90,4 @@ class Room(core_models.TimeStampModel):
         if len(all_reviews) == 0:
             return 0
         else:
-            return all_ratings / len(all_reviews)
+            return round(all_ratings / len(all_reviews), 2)
