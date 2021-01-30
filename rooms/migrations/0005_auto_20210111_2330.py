@@ -9,13 +9,17 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('rooms', '0004_auto_20210110_2244'),
+        ("rooms", "0004_auto_20210110_2244"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='room',
-            name='host',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='rooms', to=settings.AUTH_USER_MODEL),
+            model_name="room",
+            name="host",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="rooms",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

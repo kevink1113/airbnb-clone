@@ -7,6 +7,7 @@ from users import models as user_models
 
 class AbstractItem(core_models.TimeStampModel):
     """ Abstract Item """
+
     name = models.CharField(max_length=80)
 
     class Meta:
@@ -46,6 +47,7 @@ class HouseRule(AbstractItem):
 
 class Photo(core_models.TimeStampModel):
     """ Photo Model Definition """
+
     caption = models.CharField(max_length=80)
     file = models.ImageField(upload_to="room_photos")
     room = models.ForeignKey("Room", related_name="photos", on_delete=models.CASCADE)
@@ -56,6 +58,7 @@ class Photo(core_models.TimeStampModel):
 
 class Room(core_models.TimeStampModel):
     """ Room Model definition """
+
     name = models.CharField(max_length=140)
     description = models.TextField()
     country = CountryField()
@@ -69,8 +72,12 @@ class Room(core_models.TimeStampModel):
     check_in = models.TimeField()
     check_out = models.TimeField()
     instant_book = models.BooleanField(default=False)
-    host = models.ForeignKey(user_models.User, related_name="rooms", on_delete=models.CASCADE)
-    room_type = models.ForeignKey(RoomType, related_name="rooms", on_delete=models.SET_NULL, null=True)
+    host = models.ForeignKey(
+        user_models.User, related_name="rooms", on_delete=models.CASCADE
+    )
+    room_type = models.ForeignKey(
+        RoomType, related_name="rooms", on_delete=models.SET_NULL, null=True
+    )
     amenities = models.ManyToManyField(Amenity, related_name="rooms", blank=True)
     facilities = models.ManyToManyField(Facility, related_name="rooms", blank=True)
     house_rules = models.ManyToManyField(HouseRule, related_name="rooms", blank=True)
@@ -83,7 +90,7 @@ class Room(core_models.TimeStampModel):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse("rooms:detail", kwargs={'pk': self.pk})
+        return reverse("rooms:detail", kwargs={"pk": self.pk})
 
     def total_rating(self):
         all_reviews = self.reviews.all()

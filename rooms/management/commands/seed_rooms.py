@@ -7,10 +7,15 @@ from users import models as user_models
 
 
 class Command(BaseCommand):
-    help = 'This command creates many users'
+    help = "This command creates many users"
 
     def add_arguments(self, parser):
-        parser.add_argument("--number", default=2, type=int, help="How many rooms do you want to create?")
+        parser.add_argument(
+            "--number",
+            default=2,
+            type=int,
+            help="How many rooms do you want to create?",
+        )
 
     def handle(self, *args, **options):
         number = options.get("number")
@@ -19,16 +24,20 @@ class Command(BaseCommand):
         all_users = user_models.User.objects.all()
         room_types = room_models.RoomType.objects.all()
         # print(room_types, all_users)
-        seeder.add_entity(room_models.Room, number, {
-            'name': lambda x: seeder.faker.address(),
-            'host': lambda x: random.choice(all_users),
-            'room_type': lambda x: random.choice(room_types),
-            'guests': lambda x: random.randint(1, 20),
-            'price': lambda x: random.randint(1, 300),
-            'beds': lambda x: random.randint(1, 5),
-            'bedrooms': lambda x: random.randint(1, 5),
-            'baths': lambda x: random.randint(1, 5),
-        })
+        seeder.add_entity(
+            room_models.Room,
+            number,
+            {
+                "name": lambda x: seeder.faker.address(),
+                "host": lambda x: random.choice(all_users),
+                "room_type": lambda x: random.choice(room_types),
+                "guests": lambda x: random.randint(1, 20),
+                "price": lambda x: random.randint(1, 300),
+                "beds": lambda x: random.randint(1, 5),
+                "bedrooms": lambda x: random.randint(1, 5),
+                "baths": lambda x: random.randint(1, 5),
+            },
+        )
         created_photos = seeder.execute()
         created_clean = flatten(list(created_photos.values()))
         amenities = room_models.Amenity.objects.all()
