@@ -1,17 +1,25 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
     <title>{% block page_title %}{% endblock %} | Nbnb</title>
 </head>
-<body>
-<header>
+<body class="text-gray-800 mt-24">
+<header class="inset-0 container max-w-full flex items-center justify-between px-6 h-20 border-b border-gray-400 fixed bg-white">
+    <div class="flex items-center w-1/3">
+        <a href="{% url "core:home" %}" class="mr-6">
+            <img class="w-8" src="{% static 'img/logo.png' %}"/>
+        </a>
+
+        {% block search-bar %}
+            <form method="get" action="{% url "rooms:search" %}" class="w-9/12">
+                <input class="search-box border px-5 py-3 w-full placeholder-gray-600 font-medium rounded-sm w-64 shadow-md hover:shadow-lg focus:outline-none" name="city" placeholder="Search by City"/>
+            </form>
+        {% endblock %}
+    </div>
     {% include "partials/nav.html" %}
-    {% block search-bar %}
-        <form method="get" action="{% url "rooms:search" %}">
-            <input name="city" placeholder="Search by City"/>
-        </form>
-    {% endblock %}
 </header>
 
 {% block content %}{% endblock %}

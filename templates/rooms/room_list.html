@@ -5,6 +5,11 @@
 {% endblock %}
 
 {% block content %}
+
+    <div class="bg-gray-800 w-full h-50vh">
+
+    </div>
+
     {% for room in rooms %}
         <h3>
             <a href="{% url "rooms:detail" room.pk %}">
